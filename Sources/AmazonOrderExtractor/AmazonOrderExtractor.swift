@@ -5,7 +5,7 @@ enum AmazonOrderConstants: String {
     case receiptCategory = "Receipt to print"
 }
 
-func extractTextFromMessages() -> [String] {
+public func extractTextFromMessages() -> [String] {
     let outlook = application(name: "Microsoft Outlook") as! MicrosoftOutlookApplication
     
     outlook.activate()
