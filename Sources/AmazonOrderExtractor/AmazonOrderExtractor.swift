@@ -1,18 +1,29 @@
 import ScriptingUtilities
 import MicrosoftOutlookScripting
 
-enum AmazonOrderConstants: String {
-    case receiptCategory = "Receipt to print"
-}
+let receiptCategory = "Receipt to print"
 
-public func extractTextFromMessages() -> [String] {
+public func getMessageText() -> [String] {
     let outlook = application(name: "Microsoft Outlook") as! MicrosoftOutlookApplication
     
     outlook.activate()
     
     var result = [String]()
     
-    for message in outlook.inbox!.messages!() {
+    let messages = outlook.inbox!.messages!().filter {
+        let message = $0 as! MicrosoftOutlookMessage
+        guard let categories = message.categories else { return false }
+        
+        for category in categories {
+            if let name = category.name, name==receiptCategory {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    for message in messages {
         let message = message as! MicrosoftOutlookMessage
         
         if let content = message.content {
