@@ -1,9 +1,10 @@
 import ScriptingUtilities
 import MicrosoftOutlookScripting
+import SwiftSoup
 
 let receiptCategory = "Receipt to print"
 
-public func getMessageText() -> [String] {
+public func getMessages() -> [String] {
     let outlook = application(name: "Microsoft Outlook") as! MicrosoftOutlookApplication
     
     outlook.activate()
@@ -32,4 +33,33 @@ public func getMessageText() -> [String] {
     }
     
     return result
+}
+
+public func getOrderNumber(content: String) -> String? {
+    guard let document = try? parse(content) else { return nil }
+    
+    guard let links = try? document.select("a[href]") else { return nil }
+    
+    let linksWithOrderID = links.filter {
+        guard let attributes = $0.getAttributes() else { return false }
+        let hrefs = attributes.filter { $0.getKey()=="href" }
+        
+        let withOrderID = hrefs.filter {
+            let value = $0.getValue()
+            if let _ = value.range(of: "OrderID") {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        guard !withOrderID.isEmpty else { return false }
+        
+        return true
+    }
+    
+    guard let link = linksWithOrderID.first else { return nil }
+    guard let text = try? link.text() else { return nil }
+    
+    return text
 }
