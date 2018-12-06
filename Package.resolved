@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MicrosoftOutlookScripting",
+        "repositoryURL": "https://github.com/AthanasiusOfAlex/MicrosoftOutlookScripting.git",
+        "state": {
+          "branch": "master",
+          "revision": "4ec4c552d55cb9f9c65a5748c03b17870c5c5a40",
+          "version": null
+        }
+      },
+      {
+        "package": "ScriptingUtilities",
+        "repositoryURL": "https://github.com/AthanasiusOfAlex/ScriptingUtilities.git",
+        "state": {
+          "branch": "master",
+          "revision": "8aaf67eeec5126936fc25ff8c50c6152fea755a2",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
