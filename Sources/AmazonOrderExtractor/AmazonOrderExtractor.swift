@@ -96,7 +96,7 @@ public extension MicrosoftOutlookMessage {
 }
 
 public extension MicrosoftOutlookMessage {
-    func getWebsite() -> String? {
+    func getWebsite() -> String {
         return senderEmail.name
     }
 }
