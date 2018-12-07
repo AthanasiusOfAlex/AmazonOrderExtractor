@@ -7,12 +7,12 @@ let receiptCategory = "Receipt to print"
 let searchString = "orderID"
 let regexPattern = "\(searchString)%3D(\\d{3}-\\d{7}-\\d{7})[^\\d]" //e.g., 408-2248585-7863562
 
-public func getMessages() -> [String] {
+public func getMessages() -> [MicrosoftOutlookMessage] {
     let outlook = application(name: "Microsoft Outlook") as! MicrosoftOutlookApplication
     
     outlook.activate()
     
-    var result = [String]()
+    var result = [MicrosoftOutlookMessage]()
     
     let messages = outlook.inbox!.messages!().filter {
         let message = $0 as! MicrosoftOutlookMessage
@@ -29,10 +29,7 @@ public func getMessages() -> [String] {
     
     for message in messages {
         let message = message as! MicrosoftOutlookMessage
-        
-        if let content = message.content {
-            result.append(content)
-        }
+        result.append(message)
     }
     
     return result
@@ -48,7 +45,7 @@ extension String {
     }
 }
 
-public func getOrderNumber(content: String) -> String? {
+fileprivate func getOrderNumber(content: String) -> String? {
     guard let document = try? parse(content) else { return nil }
     guard let links = try? document.select("a[href]") else { return nil }
     
@@ -71,4 +68,20 @@ public func getOrderNumber(content: String) -> String? {
     guard let firstCapture = match.captures.first else { return nil }
     
     return firstCapture
+}
+
+public extension MicrosoftOutlookMessage {
+    func getOrderNumber() -> String? {
+        guard let content = self.content else { return nil }
+        return AmazonOrderExtractor.getOrderNumber(content: content)
+    }
+}
+
+public extension MicrosoftOutlookMessage {
+    func getWebsite() -> String? {
+        guard let sender = self.sender else { return nil }
+        
+
+        return ""
+    }
 }
