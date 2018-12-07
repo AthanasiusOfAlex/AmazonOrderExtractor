@@ -8,16 +8,13 @@ let receiptCategory = "Receipt to print"
 let searchString = "orderID"
 let regexPattern = "\(searchString)%3D(\\d{3}-\\d{7}-\\d{7})[^\\d]" //e.g., 408-2248585-7863562
 
-public func getMessages() -> [MicrosoftOutlookMessage] {
+public func getReceiptMessages() -> [MicrosoftOutlookMessage] {
     let outlook = application(name: "Microsoft Outlook") as! MicrosoftOutlookApplication
     
-    outlook.activate()
+    let messages = outlook.inbox!.messages!() as! [MicrosoftOutlookMessage]
     
-    var result = [MicrosoftOutlookMessage]()
-    
-    let messages = outlook.inbox!.messages!().filter {
-        let message = $0 as! MicrosoftOutlookMessage
-        guard let categories = message.categories else { return false }
+    return messages.filter {
+        guard let categories = $0.categories else { return false }
         
         for category in categories {
             if let name = category.name, name==receiptCategory {
@@ -27,13 +24,6 @@ public func getMessages() -> [MicrosoftOutlookMessage] {
         
         return false
     }
-    
-    for message in messages {
-        let message = message as! MicrosoftOutlookMessage
-        result.append(message)
-    }
-    
-    return result
 }
 
 extension String {
@@ -115,7 +105,7 @@ public extension MicrosoftOutlookMessage {
 }
 
 public func printListOfLinks(outFileUrl url: URL) {
-    let messages = getMessages()
+    let messages = getReceiptMessages()
     let links = messages.map { $0.getOrderSummaryLink()! }
     let output = links.reduce(String()) { "\($0)<p><a href=\"\($1)\">\($1)</a></p>" }
     try? output.write(to: url, atomically: false, encoding: .utf8)
