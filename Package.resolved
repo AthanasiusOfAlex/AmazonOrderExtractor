@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Regex",
+        "repositoryURL": "https://github.com/sharplet/Regex.git",
+        "state": {
+          "branch": "master",
+          "revision": "0b18d20fbc9c279cf6493dd0fd431ebb40a7741b",
+          "version": null
+        }
+      },
+      {
         "package": "ScriptingUtilities",
         "repositoryURL": "https://github.com/AthanasiusOfAlex/ScriptingUtilities.git",
         "state": {
