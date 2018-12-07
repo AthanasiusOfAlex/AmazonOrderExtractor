@@ -1,3 +1,4 @@
+import ScriptingBridge
 import ScriptingUtilities
 import MicrosoftOutlookScripting
 import SwiftSoup
@@ -70,6 +71,23 @@ fileprivate func getOrderNumber(content: String) -> String? {
     return firstCapture
 }
 
+public struct EmailAddress {
+    fileprivate let originalObject: [AnyHashable : Any]
+}
+
+public extension EmailAddress {
+    var name: String { return originalObject["name"]! as! String }
+    var address: String { return originalObject["address"]! as! String }
+    var type: MicrosoftOutlookEmailAddressType {
+        return MicrosoftOutlookEmailAddressType(rawValue: originalObject["type"] as! AEKeyword)!}
+}
+
+public extension MicrosoftOutlookMessage {
+    public var senderEmail: EmailAddress {
+        return EmailAddress(originalObject: self.sender!)
+    }
+}
+
 public extension MicrosoftOutlookMessage {
     func getOrderNumber() -> String? {
         guard let content = self.content else { return nil }
@@ -79,9 +97,6 @@ public extension MicrosoftOutlookMessage {
 
 public extension MicrosoftOutlookMessage {
     func getWebsite() -> String? {
-        guard let sender = self.sender else { return nil }
-        
-
-        return ""
+        return senderEmail.name
     }
 }
