@@ -1,9 +1,11 @@
 import ScriptingUtilities
 import MicrosoftOutlookScripting
 import SwiftSoup
+import Regex
 
 let receiptCategory = "Receipt to print"
 let searchString = "orderID"
+let regexPattern = "\(searchString)%3D\\d{3}-\\d{6}-\\d{7}[^\\d]"
 
 public func getMessages() -> [String] {
     let outlook = application(name: "Microsoft Outlook") as! MicrosoftOutlookApplication
@@ -63,7 +65,9 @@ public func getOrderNumber(content: String) -> String? {
         return nil
     }
     
-    let attributeText = try? linkWithOrderID.attr("href")
+    guard let attributeText = try? linkWithOrderID.attr("href") else { return nil }
+    guard let regex =  try? Regex(string: regexPattern) else { return nil }
+    guard let match = regex.firstMatch(in: attributeText) else { return nil }
     
-    return attributeText
+    return match.matchedString
 }
