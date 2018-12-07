@@ -75,14 +75,14 @@ public func getOrderNumber(content: String) -> String? {
         guard let attributes = $0.getAttributes() else { return false }
         let hrefs = attributes.filter { $0.getKey()=="href" }
         
-        guard let firstHref = hrefs.first else { return false }
-        
-        return true
+        if let _ = hrefs.first(where: { $0.getValue().contains(substring: "OrderID") }) {
+            return true
+        } else {
+            return false
+        }
     }) else {
         return nil
     }
-    
-    // guard let link = linksWithOrderID.first else { return nil }
     
     return try? linkWithOrderID.attr("href")
 }
