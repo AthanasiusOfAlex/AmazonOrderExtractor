@@ -42,6 +42,8 @@ public func getOrderNumber(content: String) -> String? {
     
     guard let links = try? document.select("a[href]") else { return nil }
     
+    print("We got hrefs")
+    
     let linksWithOrderID = links.filter {
         guard let attributes = $0.getAttributes() else { return false }
         let hrefs = attributes.filter { $0.getKey()=="href" }
