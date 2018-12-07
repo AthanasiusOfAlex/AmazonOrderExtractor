@@ -38,32 +38,31 @@ public func getMessages() -> [String] {
 public func getOrderNumber(content: String) -> String? {
     guard let document = try? parse(content) else { return nil }
     
-    print("We got a document")
-    
     guard let links = try? document.select("a[href]") else { return nil }
     
-    print("We got hrefs")
+//    let linksWithOrderID = links.filter {
+//        guard let attributes = $0.getAttributes() else { return false }
+//        let hrefs = attributes.filter { $0.getKey()=="href" }
+//
+//        let withOrderID = hrefs.filter {
+//            let value = $0.getValue()
+//            if let _ = value.range(of: "OrderID") {
+//                return true
+//            } else {
+//                return false
+//            }
+//        }
+//
+//        guard !withOrderID.isEmpty else { return false }
+//
+//        return true
+//    }
+//
+//    guard let link = linksWithOrderID.first else { return nil }
+//    guard let text = try? link.text() else { return nil }
     
-    let linksWithOrderID = links.filter {
-        guard let attributes = $0.getAttributes() else { return false }
-        let hrefs = attributes.filter { $0.getKey()=="href" }
-        
-        let withOrderID = hrefs.filter {
-            let value = $0.getValue()
-            if let _ = value.range(of: "OrderID") {
-                return true
-            } else {
-                return false
-            }
-        }
-        
-        guard !withOrderID.isEmpty else { return false }
-        
-        return true
-    }
+    guard let link = links.first() else { return nil }
+    print("We have a link")
     
-    guard let link = linksWithOrderID.first else { return nil }
-    guard let text = try? link.text() else { return nil }
-    
-    return text
+    return try? link.outerHtml()
 }
