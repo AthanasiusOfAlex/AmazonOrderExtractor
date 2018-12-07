@@ -80,7 +80,7 @@ public func getOrderNumber(content: String) -> String? {
         return true
     }
     
-    guard let link = links.first() else { return nil }
+    guard let link = linksWithOrderID.first else { return nil }
     
     return try? link.attr("href")
 }
