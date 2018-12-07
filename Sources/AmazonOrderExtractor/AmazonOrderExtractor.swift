@@ -38,6 +38,8 @@ public func getMessages() -> [String] {
 public func getOrderNumber(content: String) -> String? {
     guard let document = try? parse(content) else { return nil }
     
+    print("We got a document")
+    
     guard let links = try? document.select("a[href]") else { return nil }
     
     let linksWithOrderID = links.filter {
