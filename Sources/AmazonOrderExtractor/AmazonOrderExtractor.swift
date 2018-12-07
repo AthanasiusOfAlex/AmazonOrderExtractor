@@ -64,5 +64,5 @@ public func getOrderNumber(content: String) -> String? {
     guard let link = links.first() else { return nil }
     print("We have a link")
     
-    return try? link.outerHtml()
+    return try? link.attr("href")
 }
