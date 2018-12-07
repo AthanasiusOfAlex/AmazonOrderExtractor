@@ -113,3 +113,10 @@ public extension MicrosoftOutlookMessage {
         return makeOrderSummaryLink(website: website, orderID: orderID)
     }
 }
+
+public func printListOfLinks(outFileUrl url: URL) {
+    let messages = getMessages()
+    let links = messages.map { $0.getOrderSummaryLink()! }
+    let output = links.reduce(String()) { "\($0)<p><a href=\"\($1)\">\($1)</a></p>" }
+    try? output.write(to: url, atomically: false, encoding: .utf8)
+}
