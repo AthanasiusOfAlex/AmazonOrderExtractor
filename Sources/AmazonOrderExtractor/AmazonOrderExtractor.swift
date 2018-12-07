@@ -68,8 +68,7 @@ public func getOrderNumber(content: String) -> String? {
     guard let attributeText = try? linkWithOrderID.attr("href") else { return nil }
     guard let regex = try? Regex(string: regexPattern) else { return nil }
     guard let match = regex.firstMatch(in: attributeText) else { return nil }
-    let captures = match.captures.dropFirst()
-    guard let firstCapture = captures.first else { return nil }
+    guard let firstCapture = match.captures.first else { return nil }
     
     return firstCapture
 }
