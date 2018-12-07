@@ -97,6 +97,19 @@ public extension MicrosoftOutlookMessage {
 
 public extension MicrosoftOutlookMessage {
     func getWebsite() -> String {
-        return senderEmail.name
+        return senderEmail.name.lowercased()
+    }
+}
+
+func makeOrderSummaryLink(website: String, orderID: String) -> String {
+    return "https://www.\(website)/gp/css/summary/print.html/ref=od_aui_print_invoice?ie=UTF8&orderID=\(orderID)"
+}
+
+public extension MicrosoftOutlookMessage {
+    func getOrderSummaryLink() -> String? {
+        guard let orderID = self.getOrderNumber() else { return nil }
+        let website = self.getWebsite()
+        
+        return makeOrderSummaryLink(website: website, orderID: orderID)
     }
 }
