@@ -75,7 +75,7 @@ public func getOrderNumber(content: String) -> String? {
         guard let attributes = $0.getAttributes() else { return false }
         let hrefs = attributes.filter { $0.getKey()=="href" }
         
-        if let _ = hrefs.first(where: { $0.getValue().contains(substring: "OrderID") }) {
+        if let _ = hrefs.first(where: { print($0.getValue()); return $0.getValue().contains(substring: "OrderID") }) {
             return true
         } else {
             return false
