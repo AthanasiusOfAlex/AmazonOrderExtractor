@@ -5,7 +5,8 @@ import Regex
 
 let receiptCategory = "Receipt to print"
 let searchString = "orderID"
-let regexPattern = "\(searchString)%3D\\d{3}-\\d{6}-\\d{7}[^\\d]"
+//let regexPattern = "\(searchString)%3D\\d{3}-\\d{6}-\\d{7}[^\\d]"
+let regexPattern = "\(searchString)%3D"
 
 public func getMessages() -> [String] {
     let outlook = application(name: "Microsoft Outlook") as! MicrosoftOutlookApplication
