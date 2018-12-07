@@ -35,9 +35,18 @@ public func getMessages() -> [String] {
     return result
 }
 
+extension String {
+    func contains(substring: String) -> Bool {
+        if let _ = self.range(of: substring) {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
 public func getOrderNumber(content: String) -> String? {
     guard let document = try? parse(content) else { return nil }
-    
     guard let links = try? document.select("a[href]") else { return nil }
     
 //    let linksWithOrderID = links.filter {
@@ -61,8 +70,17 @@ public func getOrderNumber(content: String) -> String? {
 //    guard let link = linksWithOrderID.first else { return nil }
 //    guard let text = try? link.text() else { return nil }
     
+    
+    let linksWithOrderID = links.filter {
+        guard let attributes = $0.getAttributes() else { return false }
+        let hrefs = attributes.filter { $0.getKey()=="href" }
+        
+        guard let firstHref = hrefs.first else { return false }
+        
+        return true
+    }
+    
     guard let link = links.first() else { return nil }
-    print("We have a link")
     
     return try? link.attr("href")
 }
