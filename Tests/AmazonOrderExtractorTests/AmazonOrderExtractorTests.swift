@@ -3,7 +3,8 @@ import XCTest
 
 final class AmazonOrderExtractorTests: XCTestCase {
     func testExample() {
-        extractTextFromMessages()
+        _ = getReceiptMessages().map { print($0.subject!) }
+        openLinksInChrome()
     }
 
     static var allTests = [

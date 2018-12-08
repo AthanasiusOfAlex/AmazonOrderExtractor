@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "GoogleChromeScripting",
+        "repositoryURL": "https://github.com/AthanasiusOfAlex/GoogleChromeScripting.git",
+        "state": {
+          "branch": "master",
+          "revision": "589c1e9ed2375abd6c6714ab329c5d4f109110fa",
+          "version": null
+        }
+      },
+      {
         "package": "MicrosoftOutlookScripting",
         "repositoryURL": "https://github.com/AthanasiusOfAlex/MicrosoftOutlookScripting.git",
         "state": {
