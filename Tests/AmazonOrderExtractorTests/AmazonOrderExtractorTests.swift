@@ -4,7 +4,7 @@ import XCTest
 final class AmazonOrderExtractorTests: XCTestCase {
     func testExample() {
         _ = getReceiptMessages().map { print($0.subject!) }
-        openLinksInChrome()
+        //openLinksInChrome()
     }
 
     static var allTests = [

@@ -1,7 +1,6 @@
 import ScriptingBridge
 import ScriptingUtilities
 import MicrosoftOutlookScripting
-import GoogleChromeScripting
 import SwiftSoup
 import Regex
 
@@ -112,10 +111,3 @@ public func printListOfLinks(outFileUrl url: URL) {
     try? output.write(to: url, atomically: false, encoding: .utf8)
 }
 
-
-public func openLinksInChrome() {
-    let messages = getReceiptMessages()
-    let chrome = application(name: "Google Chrome") as! GoogleChromeApplication
-    
-    chrome.activate()
-}

@@ -13,7 +13,6 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/AthanasiusOfAlex/MicrosoftOutlookScripting.git", .branch("master")),
-        .package(url: "https://github.com/AthanasiusOfAlex/GoogleChromeScripting.git", .branch("master")),
         .package(url: "https://github.com/scinfu/SwiftSoup.git", .branch("master")),
         .package(url: "https://github.com/sharplet/Regex.git", .branch("master")),
     ],
@@ -22,7 +21,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "AmazonOrderExtractor",
-            dependencies: ["MicrosoftOutlookScripting", "GoogleChromeScripting","SwiftSoup", "Regex"]),
+            dependencies: ["MicrosoftOutlookScripting","SwiftSoup", "Regex"]),
         .testTarget(
             name: "AmazonOrderExtractorTests",
             dependencies: ["AmazonOrderExtractor"]),
