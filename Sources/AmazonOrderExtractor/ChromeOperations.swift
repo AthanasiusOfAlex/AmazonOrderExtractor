@@ -28,7 +28,7 @@ public func openLinksInChrome() {
             set URL of myTab to myLink
             end tell
             """
-            runAppleScript(appleScript: script)
+            _ = runAppleScript(appleScript: script)
         }
         
         func fillOtherTab(withUrl url: String) {
@@ -38,7 +38,7 @@ public func openLinksInChrome() {
             tell front window to make new tab at after (get active tab) with properties {URL:myLink}
             end tell
             """
-            runAppleScript(appleScript: script)
+            _ = runAppleScript(appleScript: script)
         }
         
         let links = getReceiptMessages().map{ $0.getOrderSummaryLink() }.filter { $0 != nil }.map { $0! }
