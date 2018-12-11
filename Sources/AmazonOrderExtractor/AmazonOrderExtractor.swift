@@ -104,10 +104,10 @@ public extension MicrosoftOutlookMessage {
     }
 }
 
-public func printListOfLinks(outFileUrl url: URL) {
+public func printListOfLinks(outputFile: String) {
     let messages = getReceiptMessages()
     let links = messages.map { $0.getOrderSummaryLink()! }
     let output = links.reduce(String()) { "\($0)<p><a href=\"\($1)\">\($1)</a></p>" }
-    try? output.write(to: url, atomically: false, encoding: .utf8)
+    try? output.write(toFile: outputFile, atomically: false, encoding: .utf8)
 }
 
