@@ -36,9 +36,9 @@ public func openLinksInChrome() {
             let script = """
             set myLink to "\(url)"
             tell application "Google Chrome"
-            set myWindow to (make new window)
-            set myTab to active tab of myWindow
-            set URL of myTab to myLink
+                set myWindow to (make new window)
+                set myTab to active tab of myWindow
+                set URL of myTab to myLink
             end tell
             """
             _ = runAppleScript(appleScript: script)
@@ -48,7 +48,7 @@ public func openLinksInChrome() {
             let script = """
             set myLink to "\(url)"
             tell application "Google Chrome"
-            tell front window to make new tab at after (get active tab) with properties {URL:myLink}
+                tell front window to make new tab at after (get active tab) with properties {URL:myLink}
             end tell
             """
             _ = runAppleScript(appleScript: script)
