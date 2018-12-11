@@ -7,18 +7,31 @@
 
 import Foundation
 
+public extension Date {
+    
+    private func getName(withFormat format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
+    
+    public func getMonthName() -> String { return getName(withFormat: "MM") }
+    public func getYearName() -> String { return getName(withFormat: "yyyy") }
+    public func getDayName() -> String { return getName(withFormat: "dd") }
+}
+
+public func runAppleScript(appleScript: String) -> [NSObject: AnyObject] {
+    let script = NSAppleScript(source: appleScript)!
+    var errorInfo = NSDictionary()
+    withUnsafeMutablePointer(to: &errorInfo) {
+        let errorInfoPointer = AutoreleasingUnsafeMutablePointer<NSDictionary?>($0)
+        script.executeAndReturnError(errorInfoPointer)
+    }
+    return errorInfo as [NSObject: AnyObject]
+}
+
 public func openLinksInChrome() {
     do {
-        func runAppleScript(appleScript: String) -> [NSObject: AnyObject] {
-            let script = NSAppleScript(source: appleScript)!
-            var errorInfo = NSDictionary()
-            withUnsafeMutablePointer(to: &errorInfo) {
-                let errorInfoPointer = AutoreleasingUnsafeMutablePointer<NSDictionary?>($0)
-                script.executeAndReturnError(errorInfoPointer)
-            }
-            return errorInfo as [NSObject: AnyObject]
-        }
-        
         func fillFirstTab(withUrl url: String) {
             let script = """
             set myLink to "\(url)"
