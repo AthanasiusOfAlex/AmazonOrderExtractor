@@ -9,13 +9,14 @@ import Foundation
 
 public func openLinksInChrome() {
     do {
-        func runAppleScript(script: String) {
-            let script = NSAppleScript(source: script)!
-            var dict = NSDictionary()
-            withUnsafeMutablePointer(to: &dict) {
-                let errorInfo = AutoreleasingUnsafeMutablePointer<NSDictionary?>($0)
-                script.executeAndReturnError(errorInfo)
+        func runAppleScript(appleScript: String) -> [NSObject: AnyObject] {
+            let script = NSAppleScript(source: appleScript)!
+            var errorInfo = NSDictionary()
+            withUnsafeMutablePointer(to: &errorInfo) {
+                let errorInfoPointer = AutoreleasingUnsafeMutablePointer<NSDictionary?>($0)
+                script.executeAndReturnError(errorInfoPointer)
             }
+            return errorInfo as [NSObject: AnyObject]
         }
         
         func fillFirstTab(withUrl url: String) {
@@ -27,7 +28,7 @@ public func openLinksInChrome() {
             set URL of myTab to myLink
             end tell
             """
-            runAppleScript(script: script)
+            runAppleScript(appleScript: script)
         }
         
         func fillOtherTab(withUrl url: String) {
@@ -37,7 +38,7 @@ public func openLinksInChrome() {
             tell front window to make new tab at after (get active tab) with properties {URL:myLink}
             end tell
             """
-            runAppleScript(script: script)
+            runAppleScript(appleScript: script)
         }
         
         let links = getReceiptMessages().map{ $0.getOrderSummaryLink() }.filter { $0 != nil }.map { $0! }
